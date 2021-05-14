@@ -73,7 +73,7 @@ variable "ssh_username" {
 variable "ssh_password" {
   type        = string
   description = "A plaintext password to use to authenticate with SSH"
-  default     = "vagrant"
+  default     = "packer"
 }
 
 variable "ssh_timeout" {
@@ -92,4 +92,10 @@ variable "vbox_cpu" {
   type        = number
   description = "The number of cpus to use in the VirtualBox VM. Defaults to 2"
   default     = 2
+}
+
+variable "virtualbox_output_directory" {
+  type        = string
+  description = "The root file directory name for VirtualBox image creation"
+  default     = "virtualbox-iso"
 }
