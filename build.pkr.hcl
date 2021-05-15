@@ -14,11 +14,58 @@ build {
     only = ["virtualbox-iso.ubuntu-20_04-desktop-amd64"]
 
     environment_vars = [
+      "DEBIAN_FRONTEND=noninteractive",
       "SSH_USERNAME=${var.ssh_username}"
     ]
     execute_command = "echo '${var.ssh_password}' | {{ .Vars }} sudo -E -S bash '{{ .Path }}'"
     scripts = [
       "scripts/desktop.sh"
     ]
+    expect_disconnect = true
+  }
+
+  provisioner "shell" {
+    environment_vars = [
+      "DEBIAN_FRONTEND=noninteractive",
+      "INSTALL_VAGRANT_KEY=${var.install_vagrant_key}",
+      "SSH_USERNAME=${var.ssh_username}",
+      "SSH_PASSWORD=${var.ssh_password}",
+      "UPDATE=${var.update}",
+      "VAGRANT_INSECURE_KEY=${var.vagrant_insecure_key}"
+    ]
+    execute_command = "echo '${var.ssh_password}' | {{ .Vars }} sudo -E -S bash '{{ .Path }}'"
+    scripts = [
+      "scripts/update.sh",
+      "scripts/vagrant.sh",
+      "scripts/sshd.sh",
+      "scripts/virtualbox.sh",
+      "scripts/motd.sh",
+    ]
+    expect_disconnect = true
+  }
+
+  provisioner "shell" {
+    except = ["virtualbox-iso.ubuntu-20_04-desktop-amd64"]
+
+    environment_vars = [
+      "DEBIAN_FRONTEND=noninteractive"
+    ]
+    execute_command = "echo '${var.ssh_password}' | {{ .Vars }} sudo -E -S bash '{{ .Path }}'"
+    scripts = [
+      "scripts/minimize.sh"
+    ]
+    expect_disconnect = true
+  }
+
+  provisioner "shell" {
+    environment_vars = [
+      "DEBIAN_FRONTEND=noninteractive",
+      "SSH_USERNAME=${var.ssh_username}"
+    ]
+    execute_command = "echo '${var.ssh_password}' | {{ .Vars }} sudo -E -S bash '{{ .Path }}'"
+    scripts = [
+      "scripts/cleanup.sh"
+    ]
+    expect_disconnect = true
   }
 }

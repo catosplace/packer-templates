@@ -28,6 +28,12 @@ variable "headless" {
   default     = false
 }
 
+variable "install_vagrant_key" {
+  type        = bool
+  description = "Flag to determine if the Vagrant user should be provisioned into the virtual machine image"
+  default     = true
+}
+
 variable "iso_checksum" {
   type        = string
   description = "The checksum for the ISO file or virtual hard drive."
@@ -64,6 +70,12 @@ variable "memory" {
   default     = 4096
 }
 
+variable "post_shutdown_delay" {
+  type        = string
+  description = "The amount of time to wait after shutting down the virtual machine. Useful if you get any device errors on shutdown"
+  default     = "30s"
+}
+
 variable "ssh_username" {
   type        = string
   description = "The username to connect to SSH with. Required if using SSH"
@@ -82,16 +94,46 @@ variable "ssh_timeout" {
   default     = "45m"
 }
 
-variable "vbox_memory" {
-  type        = number
-  description = "The amount of memory to provide the VirtualBox VM in megabytes. Defaults to 2056"
-  default     = 2056
+variable "update" {
+  type        = bool
+  description = "Flag to determine if a distro upgrade should be performed during provisioning of the virtual machine image"
+  default     = false
 }
 
-variable "vbox_cpu" {
+variable "vagrant_insecure_key" {
+  type        = string
+  description = "Vagrant insecure public key for use when provisioning the `vagrant` user during provisioning of the virtual machine"
+  default     = "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA6NF8iallvQVp22WDkTkyrtvp9eWW6A8YVr+kz4TjGYe7gHzIw+niNltGEFHzD8+v1I2YJ6oXevct1YeS0o9HZyN1Q9qgCgzUFtdOKLv6IedplqoPkcmF0aYet2PkEDo3MlTBckFXPITAMzF8dJSIFo9D8HfdOV0IAdx4O7PtixWKn5y2hMNG0zQPyUecp4pzC6kivAIhyfHilFR61RGL+GPXQ2MWZWFYbAGjyiYJnAmCP3NOTd0jMZEnDkbUvxhMmBYSdETk1rRgm+R4LOzFUGaHqHDLKLX+FIPKcF96hrucXzcWyLbIbEgE98OHlnVYCzRdK8jlqm8tehUc9c9WhQ== vagrant insecure public key"
+}
+
+variable "vbox_memory" {
+  type        = number
+  description = "The amount of memory to provide the VirtualBox VM in megabytes. Defaults to 4096"
+  default     = 4096
+}
+
+variable "vbox_cpus" {
   type        = number
   description = "The number of cpus to use in the VirtualBox VM. Defaults to 2"
   default     = 2
+}
+
+variable "vbox_graphicscontroller" {
+  type        = string
+  description = "Specifies the use of a graphics controller, with an option to choose a specific type"
+  default     = "vmsvga"
+}
+
+variable "vbox_nic" {
+  type        = string
+  description = "Configures the type of networking for each of the VMs virtual network cards"
+  default     = "nat"
+}
+
+variable "vbox_vram" {
+  type        = number
+  description = "The amount of RAM that the VirtualBox VM virtual graphics card should have"
+  default     = 16
 }
 
 variable "virtualbox_output_directory" {
