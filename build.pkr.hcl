@@ -3,15 +3,17 @@ build {
 
   # Build with `packer build .`
   # Or build individually with:
-  #   `packer build --only=*server-amd64`
-  #   `packer build --only=*desktop-amd64`
+  #   `packer build --only=*server-amd64 .`
+  #   `packer build --only=*desktop-amd64 .`
+  #   `packer build --only=*catosplace-engineering .`
   sources = [
     "source.virtualbox-iso.ubuntu-20_04-server-amd64",
-    "source.virtualbox-iso.ubuntu-20_04-desktop-amd64"
+    "source.virtualbox-iso.ubuntu-20_04-desktop-amd64",
+    "source.virtualbox-iso.catosplace-engineering"
   ]
 
   provisioner "shell" {
-    only = ["virtualbox-iso.ubuntu-20_04-desktop-amd64"]
+    except = ["virtualbox-iso.ubuntu-20_04-server-amd64"]
 
     environment_vars = [
       "DEBIAN_FRONTEND=noninteractive",
@@ -45,7 +47,7 @@ build {
   }
 
   provisioner "shell" {
-    except = ["virtualbox-iso.ubuntu-20_04-desktop-amd64"]
+    only = ["virtualbox-iso.ubuntu-20_04-server-amd64"]
 
     environment_vars = [
       "DEBIAN_FRONTEND=noninteractive"
@@ -65,6 +67,20 @@ build {
     execute_command = "echo '${var.ssh_password}' | {{ .Vars }} sudo -E -S bash '{{ .Path }}'"
     scripts = [
       "scripts/cleanup.sh"
+    ]
+    expect_disconnect = true
+  }
+
+  provisioner "shell" {
+    only = ["virtualbox-iso.catosplace-engineering"]
+
+    environment_vars = [
+      "DEBIAN_FRONTEND=noninteractive",
+      "AWS_VAULT_VERSION=6.3.1"
+    ]
+    execute_command = "echo '${var.ssh_password}' | {{ .Vars }} sudo -E -S bash '{{ .Path }}'"
+    scripts = [
+      "scripts/catosplace/aws.sh"
     ]
     expect_disconnect = true
   }
