@@ -1,0 +1,20 @@
+Vagrant.require_version ">= 2.2.15"
+Vagrant.configure("2") do |config|
+  config.vm.box = "catosplace-engineering"
+  config.vm.hostname = "catosplace-engineering"
+
+  config.ssh.username = "vagrant"
+  config.ssh.password = "vagrant"
+
+  config.vm.network "forwarded_port", guest: 80, host: 8080
+
+  config.vm.synced_folder ".", "/vagrant", disabled: true
+
+  config.vm.provider "virtualbox" do |vb|
+    # Disply the VirtualBox GUI when booting the machine
+    vb.gui = true
+    vb.cpus = "2"
+    vb.memory = "4096"
+    vb.name = "catosplace-engineering"
+  end
+end

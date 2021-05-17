@@ -3,9 +3,9 @@ build {
 
   # Build with `packer build .`
   # Or build individually with:
-  #   `packer build --only=*server-amd64 .`
-  #   `packer build --only=*desktop-amd64 .`
-  #   `packer build --only=*catosplace-engineering .`
+  #   `packer build -only=*server-amd64 .`
+  #   `packer build -only=*desktop-amd64 .`
+  #   `packer build -only=*catosplace-engineering .`
   sources = [
     "source.virtualbox-iso.ubuntu-20_04-server-amd64",
     "source.virtualbox-iso.ubuntu-20_04-desktop-amd64",
@@ -33,7 +33,9 @@ build {
       "SSH_USERNAME=${var.ssh_username}",
       "SSH_PASSWORD=${var.ssh_password}",
       "UPDATE=${var.update}",
-      "VAGRANT_INSECURE_KEY=${var.vagrant_insecure_key}"
+      "VAGRANT_INSECURE_KEY=${var.vagrant_insecure_key}",
+      "VAGRANT_SSH_USERNAME=${var.vagrant_ssh_username}",
+      "VAGRANT_SSH_PASSWORD=${var.vagrant_ssh_password}"
     ]
     execute_command = "echo '${var.ssh_password}' | {{ .Vars }} sudo -E -S bash '{{ .Path }}'"
     scripts = [
@@ -84,4 +86,10 @@ build {
     ]
     expect_disconnect = true
   }
+
+  post-processor "vagrant" {
+    keep_input_artifact = true
+    output              = "vagrant/{{ .Provider }}-catosplace-engineering.box"
+  }
+
 }
