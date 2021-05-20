@@ -32,6 +32,8 @@ autoinstall:
     hostname: packer
     password: '$6$rounds=4096$osG3QBkYJa$4OYyAQtI2UIw/CzTo8MpJN4pZde/Doa2DHT5i4CkmD5oDqI0ibN.sMuRUJstKCnaZmLwj7gcUgjQR054gcG7e/'
     username: packer
+  user-data:
+    timezone: Pacific/Auckland
   apt:
     geoip: true
     preserve_sources_list: false
