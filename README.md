@@ -37,6 +37,7 @@ The Packer templates require you to have the following tools available:
 * [Packer](https://www.packer.io/)
 * [VirtualBox](https://www.virtualbox.org/)
 * [Vagrant](https://www.vagrantup.com/)
+* [pre-commit](https://pre-commit.com/)
 
 ## Usage
 The `packer` cli enables you to build the Packer template images and Vagrant box. 
@@ -54,3 +55,6 @@ You can build a single image using the `-only` cli parameter, passing an express
 packer build \
   -only *server-amd64 .
 ```
+
+### Pre-Commit Hooks
+This repository leverages the [pre-commit](https://pre-commit.com/) project to configure Git pre-commit hooks. Currently, we run the `packer fmt` and `packer validate` commands at this time. You can run these checks before committing using the `pre-commit --run all-files` command.
