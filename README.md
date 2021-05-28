@@ -57,4 +57,6 @@ packer build \
 ```
 
 ### Pre-Commit Hooks
-This repository leverages the [pre-commit](https://pre-commit.com/) project to configure Git pre-commit hooks. Currently, we run the `packer fmt` and `packer validate` commands at this time. You can run these checks before committing using the `pre-commit --run all-files` command.
+This repository leverages the [pre-commit](https://pre-commit.com/) project to configure Git pre-commit hooks. Currently, we run the `packer fmt` and `packer validate` commands at this time. 
+
+To install the pre-commit hooks, run the `pre-commit install` command. You can run the checks before committing using the `pre-commit --run all-files` command.
