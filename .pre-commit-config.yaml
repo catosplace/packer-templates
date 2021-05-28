@@ -1,8 +1,13 @@
 repos:
-  - repo: https://github.com/cisagov/pre-commit-packer
-    rev: v0.0.2
+  - repo: local
     hooks:
       - id: packer_fmt
+        name: Packer Format
+        entry: packer fmt
+        language: system
+        pass_filenames: false
+        args:
+          - '.'
   - repo: local
     hooks:
       - id: packer_validate
