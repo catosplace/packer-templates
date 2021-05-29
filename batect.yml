@@ -1,6 +1,6 @@
 containers:
   shellcheck:
-    image: koalaman/shellcheck:v0.7.2
+    image: koalaman/shellcheck-alpine:v0.7.2
     volumes:
       - local: ${PWD}
         container: /mnt
@@ -10,4 +10,4 @@ tasks:
     description: Analyse utility shellscripts
     run:
       container: shellcheck
-      command: utils/get_batect.sh
+      command: sh -c "shellcheck mnt/utils/*.sh"
