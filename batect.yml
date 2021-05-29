@@ -1,11 +1,37 @@
 containers:
+  
+  adr-tools:
+    image: rdhaliwal/adr-tools:3.0.0
+    volumes:
+      - local: <{batect.project_directory}/docs/architecture/decisions
+        container: /doc/adr    
+  
   shellcheck:
     image: koalaman/shellcheck-alpine:v0.7.2
     volumes:
-      - local: ${PWD}
+      - local: <{batect.project_directory}
         container: /mnt
 
 tasks:
+
+  adr:
+    description: Run arbitary ADR tools command
+    run:
+      container: adr-tools
+      command: adr 
+
+  new_adr:
+    description: Generate a new ADR file
+    run:
+      container: adr-tools
+      command: adr new 
+
+  generate_adr_toc:
+    description: Generate the ADR table of contents
+    run:
+      container: adr-tools
+      command: sh -c "adr generate toc -i /doc/adr/intro.md -o /doc/adr/outro.md > /doc/adr/README.md"
+
   analyse_utils_shellscripts:
     description: Analyse utility shellscripts
     run:

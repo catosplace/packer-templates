@@ -1,0 +1,1 @@
+This file was generated using the `.batect generate_adr_toc` command
