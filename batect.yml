@@ -4,10 +4,10 @@ containers:
     image: rdhaliwal/adr-tools:3.0.0
     volumes:
       - local: <{batect.project_directory}/docs/architecture/decisions
-        container: /doc/adr    
+        container: /doc/adr
   
   shellcheck:
-    image: koalaman/shellcheck-alpine:v0.7.2
+    image: koalaman/shellcheck-alpine:v0.8.0
     volumes:
       - local: <{batect.project_directory}
         container: /mnt

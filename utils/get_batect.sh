@@ -28,7 +28,7 @@ declare script_dir
 # script_name=$(basename "${0}")
 script_dir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 IFS=$'\t\n' # Split on newlines and tabs (but not on spaces)
-BATECT_VERSION=0.70.1
+BATECT_VERSION=0.79.1
 #}}}
 
 main() {
